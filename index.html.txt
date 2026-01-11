@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2025 Plano Senior Cluster – Solo & Ensemble Adjudication Form</title>
+  <style>
+    :root { --border:#cfcfcf; --text:#111; --muted:#555; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 24px;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: #fff;
+    }
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      border: 1px solid var(--border);
+      padding: 22px;
+      border-radius: 10px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    header h1 { margin: 0; font-size: 18px; letter-spacing: 0.2px; }
+    header h2 { margin: 6px 0 0; font-size: 16px; font-weight: 700; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .row {
+  display: grid;
+  grid-template-columns: minmax(160px, 220px) 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+@media (max-width: 700px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+    
+    label { font-weight: 700; font-size: 13px; }
+    input[type="text"], input[type="time"], textarea, select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    textarea { min-height: 130px; resize: vertical; }
+    .section-title {
+      margin: 18px 0 8px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .assessment {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .assessment p {
+      margin: 8px 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+    .inline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+    .radio-group {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .radio-group legend { font-weight: 800; font-size: 13px; padding: 0 6px; }
+    .radio-options label {
+      font-weight: 600;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      margin-right: 16px;
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 16px;
+    }
+    button {
+      border: 1px solid var(--border);
+      background: #f6f6f6;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    button.primary {
+      background: #111; color: #fff; border-color: #111;
+    }
+    .note { font-size: 12px; color: var(--muted); margin-top: 10px; }
+    @media print {
+      body { padding: 0; }
+      .page { border: none; border-radius: 0; }
+      .buttons, .note { display: none; }
+      input, textarea, select { border: 1px solid #888; }
+    }
+  </style>
+</head>
+
+<body>
+  <form class="page" id="adjudicationForm">
+    <header>
+      <h1>2025 PLANO SENIOR CLUSTER</h1>
+      <h2>SOLO &amp; ENSEMBLE ADJUDICATION FORM</h2>
+    </header>
+
+    <div class="grid">
+      <div class="row">
+        <label for="room">Room:</label>
+        <input id="room" name="room" type="text" />
+      </div>
+
+      <div class="row">
+        <label for="time">Time:</label>
+        <input id="time" name="time" type="text" placeholder="e.g., 10:15 AM" />
+      </div>
+
+      <div class="row">
+        <label for="category">Category:</label>
+        <input id="category" name="category" type="text" />
+      </div>
+
+      <div class="row">
+        <label for="campus">Campus:</label>
+        <input id="campus" name="campus" type="text" />
+      </div>
+
+      <div class="row">
+        <label for="instGroup">Inst./Group Size:</label>
+        <input id="instGroup" name="instGroup" type="text" />
+      </div>
+
+      <div class="row">
+        <label for="title">Title:</label>
+        <input id="title" name="title" type="text" />
+      </div>
+
+      <div class="row" style="grid-column: 1 / -1;">
+        <label for="composerArr">Composer/Arr:</label>
+        <input id="composerArr" name="composerArr" type="text" />
+      </div>
+
+      <div class="row" style="grid-column: 1 / -1;">
+        <label for="students">Student(s):</label>
+        <input id="students" name="students" type="text" />
+      </div>
+    </div>
+
+    <div class="section-title">AREAS OF ASSESSMENT</div>
+    <div class="assessment">
+      <p><strong>TONE:</strong> Blend, Intonation, Quality, Control, Support, Volume, Intensity, Balance</p>
+      <p><strong>TECHNIQUE:</strong> Rhythmic Precision, Articulation, Attack, Release, Fluency, Flexibility</p>
+      <p><strong>MUSICIANSHIP:</strong> Note Spacing, Accents, Style, Phrasing, Tempo, Dynamics, Rhythm, Expression</p>
+    </div>
+
+    <div class="section-title">COMMENTS</div>
+    <textarea id="comments" name="comments"></textarea>
+
+    <fieldset class="radio-group" style="margin-top: 14px;">
+      <legend>MEMORY? (If a solo, was it performed by memory?)</legend>
+      <div class="radio-options">
+        <label><input type="radio" name="memory" value="YES" /> YES</label>
+        <label><input type="radio" name="memory" value="NO" /> NO</label>
+      </div>
+    </fieldset>
+
+    <fieldset class="radio-group" style="margin-top: 14px;">
+      <legend>FINAL RATING</legend>
+      <div class="radio-options">
+        <label><input type="radio" name="finalRating" value="SE" /> Superior Exemplary (SE)</label>
+        <label><input type="radio" name="finalRating" value="S" /> Superior (S)</label>
+        <label><input type="radio" name="finalRating" value="E" /> Excellent (E)</label>
+        <label><input type="radio" name="finalRating" value="G" /> Good (G)</label>
+        <label><input type="radio" name="finalRating" value="N" /> Needs Improvement (N)</label>
+      </div>
+    </fieldset>
+
+    <div class="section-title" style="margin-top: 14px;">JUDGES</div>
+    <div class="row" style="grid-template-columns: 220px 1fr;">
+      <label for="judgeName">NAME / SIGNATURE:</label>
+      <input id="judgeName" name="judgeName" type="text" />
+    </div>
+
+    <div class="buttons">
+      <button type="button" onclick="window.print()">Print</button>
+      <button class="primary" type="submit">SUBMIT</button>
+    </div>
+
+    <div class="note">
+      Tip: “Save” downloads a JSON file of the entered responses (no server required).
+    </div>
+  </form>
+
+  <script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT-Rw-L09GeXeKBPvM8qjP9k5qbjQZAwTYmIkeDmXWUcBiI1wTblRURW6yE2kkRZMF6A/exec";
+
+  document.getElementById('adjudicationForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const data = Object.fromEntries(formData.entries());
+    data.memory = data.memory || "";
+    data.finalRating = data.finalRating || "";
+
+    try {
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      alert("Form submitted successfully!");
+      form.reset();
+
+    } catch (err) {
+      alert("Submission failed. Please try again.");
+      console.error(err);
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+
+    // For each URL param like ?student=... set the element with id="student"
+    for (const [key, value] of params.entries()) {
+      const el = document.getElementById(key);
+      if (!el) continue;
+
+      // Supports input, textarea, select
+      el.value = value;
+
+      // Trigger listeners if you have any validation/calcs
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  });
+</script>
+
+</body>
+</html>
