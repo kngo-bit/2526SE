@@ -220,31 +220,29 @@
   <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT-Rw-L09GeXeKBPvM8qjP9k5qbjQZAwTYmIkeDmXWUcBiI1wTblRURW6yE2kkRZMF6A/exec";
 
-  document.getElementById('adjudicationForm').addEventListener('submit', async (e) => {
+  document.getElementById("adjudicationForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    const data = Object.fromEntries(formData.entries());
-    data.memory = data.memory || "";
-    data.finalRating = data.finalRating || "";
+    // Ensure radio values exist
+    if (!formData.get("memory")) formData.set("memory", "");
+    if (!formData.get("finalRating")) formData.set("finalRating", "");
 
     try {
-      const res = await fetch(SCRIPT_URL, {
+      await fetch(SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: new URLSearchParams([...formData.entries()]).toString()
       });
 
-      alert("Form submitted successfully!");
+      alert("Submitted!");
       form.reset();
 
     } catch (err) {
-      alert("Submission failed. Please try again.");
+      alert("Submission failed (network). Please try again.");
       console.error(err);
     }
   });
@@ -254,20 +252,32 @@
   document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
 
-    // For each URL param like ?student=... set the element with id="student"
     for (const [key, value] of params.entries()) {
+      if (key === "next") continue;
       const el = document.getElementById(key);
       if (!el) continue;
-
-      // Supports input, textarea, select
       el.value = value;
-
-      // Trigger listeners if you have any validation/calcs
+      if (el.tagName !== "SELECT") el.readOnly = true;
       el.dispatchEvent(new Event("input", { bubbles: true }));
       el.dispatchEvent(new Event("change", { bubbles: true }));
     }
+
+    const nextBtn = document.getElementById("nextStudentBtn");
+    if (!nextBtn) return;
+
+    const nextUrl = params.get("next");
+    if (!nextUrl) {
+      nextBtn.disabled = true;
+      nextBtn.title = "No next student link found.";
+      return;
+    }
+
+    nextBtn.addEventListener("click", () => {
+      window.location.href = nextUrl;
+    });
   });
 </script>
+  
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
@@ -299,3 +309,4 @@
 
 </body>
 </html>
+
