@@ -226,19 +226,18 @@
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    const data = Object.fromEntries(formData.entries());
-    data.memory = data.memory || "";
-    data.finalRating = data.finalRating || "";
+    // Ensure radio values exist
+    if (!formData.get("memory")) formData.set("memory", "");
+    if (!formData.get("finalRating")) formData.set("finalRating", "");
 
     try {
       const res = await fetch(SCRIPT_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        body: new URLSearchParams([...formData.entries()]) // <-- key part
+        // IMPORTANT: do NOT set Content-Type header manually
       });
 
       if (!res.ok) throw new Error("Bad response");
-
       alert("Form submitted successfully!");
       form.reset();
 
@@ -290,6 +289,7 @@
 </body>
 
 </html>
+
 
 
 
