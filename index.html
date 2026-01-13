@@ -217,61 +217,70 @@
     </div>
   </form>
 
-<script>
+  <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT-Rw-L09GeXeKBPvM8qjP9k5qbjQZAwTYmIkeDmXWUcBiI1wTblRURW6yE2kkRZMF6A/exec";
 
-  document.getElementById("adjudicationForm").addEventListener("submit", async (e) => {
+  document.getElementById('adjudicationForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    // Ensure radio values exist
-    if (!formData.get("memory")) formData.set("memory", "");
-    if (!formData.get("finalRating")) formData.set("finalRating", "");
+    const data = Object.fromEntries(formData.entries());
+    data.memory = data.memory || "";
+    data.finalRating = data.finalRating || "";
 
     try {
-      await fetch(SCRIPT_URL, {
+      const res = await fetch(SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
-        body: new URLSearchParams([...formData.entries()])
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
       });
 
-      alert("Submitted!");
+      alert("Form submitted successfully!");
       form.reset();
 
-      // Optional: re-prefill after reset (keeps student info)
-      // window.location.reload();
-
     } catch (err) {
-      alert("Submission failed (network). Please try again.");
+      alert("Submission failed. Please try again.");
       console.error(err);
     }
   });
 </script>
 
-
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
 
-    // Prefill + lock fields
+    // For each URL param like ?student=... set the element with id="student"
     for (const [key, value] of params.entries()) {
-      if (key === "next") continue; // don't try to fill an element with id="next"
       const el = document.getElementById(key);
       if (!el) continue;
 
+      // Supports input, textarea, select
       el.value = value;
 
-      // lock prefilled info
-      if (el.tagName !== "SELECT") el.readOnly = true;
-
-      // trigger any listeners
+      // Trigger listeners if you have any validation/calcs
       el.dispatchEvent(new Event("input", { bubbles: true }));
       el.dispatchEvent(new Event("change", { bubbles: true }));
     }
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
 
-    // Next student button
+    // Existing autofill logic (keep yours if you already have it)
+    for (const [key, value] of params.entries()) {
+      const el = document.getElementById(key);
+      if (!el) continue;
+      el.value = value;
+      if (el.tagName !== "SELECT") el.readOnly = true;
+    }
+
+    // Next student button logic
     const nextBtn = document.getElementById("nextStudentBtn");
     if (!nextBtn) return;
 
@@ -289,13 +298,4 @@
 </script>
 
 </body>
-
 </html>
-
-
-
-
-
-
-
-
