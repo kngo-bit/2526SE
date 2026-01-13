@@ -209,6 +209,7 @@
     <div class="buttons">
       <button type="button" onclick="window.print()">Print</button>
       <button class="primary" type="submit">SUBMIT</button>
+      <button type="button" id="nextStudentBtn">Next student →</button>
     </div>
 
     <div class="note">
@@ -267,6 +268,35 @@
     }
   });
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+
+    // Existing autofill logic (keep yours if you already have it)
+    for (const [key, value] of params.entries()) {
+      const el = document.getElementById(key);
+      if (!el) continue;
+      el.value = value;
+      if (el.tagName !== "SELECT") el.readOnly = true;
+    }
+
+    // Next student button logic
+    const nextBtn = document.getElementById("nextStudentBtn");
+    if (!nextBtn) return;
+
+    const nextUrl = params.get("next");
+    if (!nextUrl) {
+      nextBtn.disabled = true;
+      nextBtn.title = "No next student link found.";
+      return;
+    }
+
+    nextBtn.addEventListener("click", () => {
+      window.location.href = nextUrl;
+    });
+  });
+</script>
 
 </body>
+
 </html>
