@@ -232,16 +232,14 @@
 
     try {
       const res = await fetch(SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      });
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(data)
+});
+if (!res.ok) throw new Error("Bad response");
+alert("Form submitted successfully!");
+form.reset();
 
-      alert("Form submitted successfully!");
-      form.reset();
 
     } catch (err) {
       alert("Submission failed. Please try again.");
@@ -254,33 +252,23 @@
   document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
 
-    // For each URL param like ?student=... set the element with id="student"
+    // Prefill + lock fields
     for (const [key, value] of params.entries()) {
+      if (key === "next") continue; // don't try to fill an element with id="next"
       const el = document.getElementById(key);
       if (!el) continue;
 
-      // Supports input, textarea, select
       el.value = value;
 
-      // Trigger listeners if you have any validation/calcs
+      // lock prefilled info
+      if (el.tagName !== "SELECT") el.readOnly = true;
+
+      // trigger any listeners
       el.dispatchEvent(new Event("input", { bubbles: true }));
       el.dispatchEvent(new Event("change", { bubbles: true }));
     }
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
 
-    // Existing autofill logic (keep yours if you already have it)
-    for (const [key, value] of params.entries()) {
-      const el = document.getElementById(key);
-      if (!el) continue;
-      el.value = value;
-      if (el.tagName !== "SELECT") el.readOnly = true;
-    }
-
-    // Next student button logic
+    // Next student button
     const nextBtn = document.getElementById("nextStudentBtn");
     if (!nextBtn) return;
 
@@ -297,6 +285,8 @@
   });
 </script>
 
+
 </body>
 
 </html>
+
