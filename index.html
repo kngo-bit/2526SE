@@ -217,7 +217,7 @@
     </div>
   </form>
 
-  <script>
+ <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT-Rw-L09GeXeKBPvM8qjP9k5qbjQZAwTYmIkeDmXWUcBiI1wTblRURW6yE2kkRZMF6A/exec";
 
   document.getElementById("adjudicationForm").addEventListener("submit", async (e) => {
@@ -226,20 +226,23 @@
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    // Ensure radio values exist
-    if (!formData.get("memory")) formData.set("memory", "");
-    if (!formData.get("finalRating")) formData.set("finalRating", "");
+    const data = Object.fromEntries(formData.entries());
+    data.memory = data.memory || "";
+    data.finalRating = data.finalRating || "";
 
     try {
       await fetch(SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
-        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-        body: new URLSearchParams([...formData.entries()]).toString()
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
       });
 
       alert("Submitted!");
       form.reset();
+
+      // Optional: keep student info by reloading the same prefilled URL
+      // window.location.reload();
 
     } catch (err) {
       alert("Submission failed (network). Please try again.");
@@ -309,4 +312,5 @@
 
 </body>
 </html>
+
 
