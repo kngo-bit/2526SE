@@ -231,22 +231,25 @@
     if (!formData.get("finalRating")) formData.set("finalRating", "");
 
     try {
-      const res = await fetch(SCRIPT_URL, {
+      await fetch(SCRIPT_URL, {
         method: "POST",
-        body: new URLSearchParams([...formData.entries()]) // <-- key part
-        // IMPORTANT: do NOT set Content-Type header manually
+        mode: "no-cors",
+        body: new URLSearchParams([...formData.entries()])
       });
 
-      if (!res.ok) throw new Error("Bad response");
-      alert("Form submitted successfully!");
+      alert("Submitted!");
       form.reset();
 
+      // Optional: re-prefill after reset (keeps student info)
+      // window.location.reload();
+
     } catch (err) {
-      alert("Submission failed. Please try again.");
+      alert("Submission failed (network). Please try again.");
       console.error(err);
     }
   });
 </script>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -289,6 +292,7 @@
 </body>
 
 </html>
+
 
 
 
