@@ -217,10 +217,10 @@
     </div>
   </form>
 
-  <script>
+<script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT-Rw-L09GeXeKBPvM8qjP9k5qbjQZAwTYmIkeDmXWUcBiI1wTblRURW6yE2kkRZMF6A/exec";
 
-  document.getElementById('adjudicationForm').addEventListener('submit', async (e) => {
+  document.getElementById("adjudicationForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const form = e.currentTarget;
@@ -232,13 +232,15 @@
 
     try {
       const res = await fetch(SCRIPT_URL, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(data)
-});
-if (!res.ok) throw new Error("Bad response");
-alert("Form submitted successfully!");
-form.reset();
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      if (!res.ok) throw new Error("Bad response");
+
+      alert("Form submitted successfully!");
+      form.reset();
 
     } catch (err) {
       alert("Submission failed. Please try again.");
@@ -288,5 +290,6 @@ form.reset();
 </body>
 
 </html>
+
 
 
