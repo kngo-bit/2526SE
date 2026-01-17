@@ -217,58 +217,25 @@
     </div>
   </form>
 
- <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT-Rw-L09GeXeKBPvM8qjP9k5qbjQZAwTYmIkeDmXWUcBiI1wTblRURW6yE2kkRZMF6A/exec";
-
-  document.getElementById("adjudicationForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    const data = Object.fromEntries(formData.entries());
-    data.memory = data.memory || "";
-    data.finalRating = data.finalRating || "";
-
-    try {
-      await fetch(SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-
-      alert("Submitted!");
-      form.reset();
-
-      // Optional: keep student info by reloading the same prefilled URL
-      // window.location.reload();
-
-    } catch (err) {
-      alert("Submission failed (network). Please try again.");
-      console.error(err);
-    }
-  });
-</script>
-
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
 
+    // Prefill fields from URL params (skip "next")
     for (const [key, value] of params.entries()) {
       if (key === "next") continue;
       const el = document.getElementById(key);
       if (!el) continue;
       el.value = value;
-      if (el.tagName !== "SELECT") el.readOnly = true;
-      el.dispatchEvent(new Event("input", { bubbles: true }));
-      el.dispatchEvent(new Event("change", { bubbles: true }));
+      el.readOnly = true; // lock prefilled fields
     }
 
+    // Next Student button
     const nextBtn = document.getElementById("nextStudentBtn");
+    const nextUrl = params.get("next");
+
     if (!nextBtn) return;
 
-    const nextUrl = params.get("next");
     if (!nextUrl) {
       nextBtn.disabled = true;
       nextBtn.title = "No next student link found.";
@@ -312,6 +279,7 @@
 
 </body>
 </html>
+
 
 
 
