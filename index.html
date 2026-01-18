@@ -232,7 +232,6 @@
     </div>
 
     <div class="buttons">
-      <button type="button" onclick="window.print()">Print</button>
       <button class="primary" type="submit">SUBMIT</button>
       <button type="button" id="nextStudentBtn">Next student →</button>
     </div>
@@ -301,6 +300,38 @@
     });
   });
 </script>
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT-Rw-L09GeXeKBPvM8qjP9k5qbjQZAwTYmIkeDmXWUcBiI1wTblRURW6yE2kkRZMF6A/exec";
+
+  document.getElementById("adjudicationForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    // ensure radios always exist in the payload
+    data.memory = data.memory || "";
+    data.finalRating = data.finalRating || "";
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      alert("Submitted!");
+      form.reset();
+
+    } catch (err) {
+      console.error(err);
+      alert("Submission failed (network). Please try again.");
+    }
+  });
+</script>
 
 </body>
 </html>
+
