@@ -126,7 +126,22 @@
       max-width: 300px;
       height: auto;
     }
-    
+   .room-time-campus-inst {
+  display: grid;
+  grid-template-columns: 0.9fr 0.8fr 1fr 1.1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+   .room-time-campus-inst .field {
+  display: grid;
+  grid-template-columns: 65px 1fr;
+  gap: 6px;
+  align-items: center;
+}
+ .note {
+   font-size: 9px;
+}   
   </style>
 </head>
 
@@ -140,47 +155,46 @@
       <h2>SOLO &amp; ENSEMBLE ADJUDICATION FORM</h2>
     </header>
 
-    <div class="grid">
-      <div class="row">
-        <label for="room">Room:</label>
-        <input id="room" name="room" type="text" />
-      </div>
+<div class="grid">
 
-      <div class="row">
-        <label for="time">Time:</label>
-        <input id="time" name="time" type="text" placeholder="e.g., 10:15 AM" />
-      </div>
-
-      <div class="row">
-        <label for="category">Category:</label>
-        <input id="category" name="category" type="text" />
-      </div>
-
-      <div class="row">
-        <label for="campus">Campus:</label>
-        <input id="campus" name="campus" type="text" />
-      </div>
-
-      <div class="row">
-        <label for="instGroup">Inst./Group Size:</label>
-        <input id="instGroup" name="instGroup" type="text" />
-      </div>
-
-      <div class="row">
-        <label for="title">Title:</label>
-        <input id="title" name="title" type="text" />
-      </div>
-
-      <div class="row" style="grid-column: 1 / -1;">
-        <label for="composerArr">Composer/Arr:</label>
-        <input id="composerArr" name="composerArr" type="text" />
-      </div>
-
-      <div class="row" style="grid-column: 1 / -1;">
-        <label for="students">Student(s):</label>
-        <input id="students" name="students" type="text" />
-      </div>
+  <div class="row room-time-campus-inst" style="grid-column: 1 / -1;">
+    <div class="field">
+      <label for="room">Room:</label>
+      <input id="room" name="room" type="text" />
     </div>
+
+    <div class="field">
+      <label for="time">Time:</label>
+      <input id="time" name="time" type="text" placeholder="10:15" />
+    </div>
+
+    <div class="field">
+      <label for="campus">Campus:</label>
+      <input id="campus" name="campus" type="text" />
+    </div>
+
+    <div class="field">
+      <label for="instGroup">Inst./Group:</label>
+      <input id="instGroup" name="instGroup" type="text" />
+    </div>
+  </div>
+
+  <div class="row" style="grid-column: 1 / -1;">
+    <label for="students">Student(s):</label>
+    <input id="students" name="students" type="text" />
+  </div>
+
+  <div class="row" style="grid-column: 1 / -1;">
+    <label for="title">Title:</label>
+    <input id="title" name="title" type="text" />
+  </div>
+
+  <div class="row" style="grid-column: 1 / -1;">
+    <label for="composerArr">Composer/Arr:</label>
+    <input id="composerArr" name="composerArr" type="text" />
+  </div>
+
+</div>
 
     <div class="section-title">AREAS OF ASSESSMENT</div>
     <div class="assessment">
@@ -224,7 +238,7 @@
     </div>
 
     <div class="note">
-      kathy's real cool
+      &copy; k.ngo
     </div>
   </form>
 
@@ -290,24 +304,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
