@@ -126,10 +126,10 @@
       max-width: 300px;
       height: auto;
     }
-   .room-time-campus-inst {
+  .room-time-campus-inst {
   display: grid;
-  grid-template-columns: 0.9fr 0.8fr 1fr 1.1fr;
-  gap: 10px;
+  grid-template-columns: 0.6fr 0.7fr 1fr 0.8fr 0.9fr;
+  gap: 8px;
   align-items: center;
 }
 
@@ -177,8 +177,12 @@
       <label for="instGroup">Inst./Group:</label>
       <input id="instGroup" name="instGroup" type="text" />
     </div>
+    <div class="field">
+    <label for="category">Event:</label>
+    <input id="category" name="category" type="text" />
   </div>
-
+</div>
+    
   <div class="row" style="grid-column: 1 / -1;">
     <label for="students">Student(s):</label>
     <input id="students" name="students" type="text" />
@@ -311,6 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
 
 
 
