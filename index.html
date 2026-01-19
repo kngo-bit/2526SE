@@ -244,23 +244,59 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
-  const nextId = params.get("nextId");
 
+  // Only lock these prefilled schedule fields
+  const LOCK_FIELDS = ["room","time","campus","instGroup","students","title","composerArr","category"];
+
+  for (const key of LOCK_FIELDS) {
+    const el = document.getElementById(key);
+    if (!el) continue;
+
+    const value = params.get(key);
+    if (value !== null) el.value = value;
+
+    el.readOnly = true;
+  }
+
+  // Next Student button (nextId system)
   const nextBtn = document.getElementById("nextStudentBtn");
+  if (!nextBtn) return;
+
+  const nextId = params.get("nextId");
   if (!nextId) {
     nextBtn.disabled = true;
     nextBtn.title = "No next student available.";
     return;
   }
 
+  const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwKj08y4y3ffRkLtexDRNs1zR8BWpuo7GF4VT71fqbV57fzS1inSFb_Usgb9gWWA2UP/exec";
+
   nextBtn.addEventListener("click", () => {
-    const nextUrl =
-      "https://script.google.com/macros/s/AKfycbwKj08y4y3ffRkLtexDRNs1zR8BWpuo7GF4VT71fqbV57fzS1inSFb_Usgb9gWWA2UP/exec?id=" + nextId;
-    window.location.href = nextUrl;
+    window.location.href = `${WEBAPP_URL}?id=${encodeURIComponent(nextId)}`;
   });
 });
 </script>
 
+  
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+
+    // Existing autofill logic (keep yours if you already have it)
+    for (const [key, value] of params.entries()) {
+      const el = document.getElementById(key);
+      if (!el) continue;
+      el.value = value;
+      if (el.tagName !== "SELECT") el.readOnly = true;
+    }
+
+    // Next student button logic
+    const nextBtn = document.getElementById("nextStudentBtn");
+    if (!nextBtn) return;
+    
+    });
+  });
+</script>
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT-Rw-L09GeXeKBPvM8qjP9k5qbjQZAwTYmIkeDmXWUcBiI1wTblRURW6yE2kkRZMF6A/exec";
 
