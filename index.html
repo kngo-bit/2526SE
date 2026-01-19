@@ -245,61 +245,34 @@
   document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
 
-    // Prefill fields from URL params (skip "next")
+    // Prefill
     for (const [key, value] of params.entries()) {
-      if (key === "next") continue;
-      const el = document.getElementById(key);
-      if (!el) continue;
-      el.value = value;
-      el.readOnly = true; // lock prefilled fields
-    }
-
-    // Next Student button
-    const nextBtn = document.getElementById("nextStudentBtn");
-    const nextUrl = params.get("next");
-
-    if (!nextBtn) return;
-
-    if (!nextUrl) {
-      nextBtn.disabled = true;
-      nextBtn.title = "No next student link found.";
-      return;
-    }
-
-    nextBtn.addEventListener("click", () => {
-      window.location.href = nextUrl;
-    });
-  });
-</script>
-  
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
-
-    // Existing autofill logic (keep yours if you already have it)
-    for (const [key, value] of params.entries()) {
+      if (key === "nextId") continue;
       const el = document.getElementById(key);
       if (!el) continue;
       el.value = value;
       if (el.tagName !== "SELECT") el.readOnly = true;
     }
 
-    // Next student button logic
+    // Next student
     const nextBtn = document.getElementById("nextStudentBtn");
     if (!nextBtn) return;
 
-    const nextUrl = params.get("next");
-    if (!nextUrl) {
+    const nextId = params.get("nextId");
+    if (!nextId) {
       nextBtn.disabled = true;
-      nextBtn.title = "No next student link found.";
+      nextBtn.title = "No next student.";
       return;
     }
 
+    const REDIRECT_BASE = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?id=";
+
     nextBtn.addEventListener("click", () => {
-      window.location.href = nextUrl;
+      window.location.href = REDIRECT_BASE + nextId;
     });
   });
 </script>
+
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT-Rw-L09GeXeKBPvM8qjP9k5qbjQZAwTYmIkeDmXWUcBiI1wTblRURW6yE2kkRZMF6A/exec";
 
@@ -334,4 +307,5 @@
 
 </body>
 </html>
+
 
