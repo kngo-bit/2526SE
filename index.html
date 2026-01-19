@@ -242,41 +242,35 @@
   </form>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
 
-  // Only lock these prefilled schedule fields
-  const LOCK_FIELDS = ["room","time","campus","instGroup","students","title","composerArr","category"];
+    // Prefill fields from URL params (skip "next")
+    for (const [key, value] of params.entries()) {
+      if (key === "next") continue;
+      const el = document.getElementById(key);
+      if (!el) continue;
+      el.value = value;
+      el.readOnly = true; // lock prefilled fields
+    }
 
-  for (const key of LOCK_FIELDS) {
-    const el = document.getElementById(key);
-    if (!el) continue;
+    // Next Student button
+    const nextBtn = document.getElementById("nextStudentBtn");
+    const nextUrl = params.get("next");
 
-    const value = params.get(key);
-    if (value !== null) el.value = value;
+    if (!nextBtn) return;
 
-    el.readOnly = true;
-  }
+    if (!nextUrl) {
+      nextBtn.disabled = true;
+      nextBtn.title = "No next student link found.";
+      return;
+    }
 
-  // Next Student button (nextId system)
-  const nextBtn = document.getElementById("nextStudentBtn");
-  if (!nextBtn) return;
-
-  const nextId = params.get("nextId");
-  if (!nextId) {
-    nextBtn.disabled = true;
-    nextBtn.title = "No next student available.";
-    return;
-  }
-
-  const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwKj08y4y3ffRkLtexDRNs1zR8BWpuo7GF4VT71fqbV57fzS1inSFb_Usgb9gWWA2UP/exec";
-
-  nextBtn.addEventListener("click", () => {
-    window.location.href = `${WEBAPP_URL}?id=${encodeURIComponent(nextId)}`;
+    nextBtn.addEventListener("click", () => {
+      window.location.href = nextUrl;
+    });
   });
-});
 </script>
-
   
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -293,7 +287,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // Next student button logic
     const nextBtn = document.getElementById("nextStudentBtn");
     if (!nextBtn) return;
-    
+
+    const nextUrl = params.get("next");
+    if (!nextUrl) {
+      nextBtn.disabled = true;
+      nextBtn.title = "No next student link found.";
+      return;
+    }
+
+    nextBtn.addEventListener("click", () => {
+      window.location.href = nextUrl;
     });
   });
 </script>
