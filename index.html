@@ -242,66 +242,40 @@
   </form>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
 
-    // Prefill fields from URL params (skip "next")
-    for (const [key, value] of params.entries()) {
-      if (key === "next") continue;
-      const el = document.getElementById(key);
-      if (!el) continue;
-      el.value = value;
-      el.readOnly = true; // lock prefilled fields
-    }
+  // Prefill and lock fields
+  for (const [key, value] of params.entries()) {
+    if (key === "nextId") continue; // skip helper param
+    if (key === "next") continue;   // ignore old system if present
+    const el = document.getElementById(key);
+    if (!el) continue;
 
-    // Next Student button
-    const nextBtn = document.getElementById("nextStudentBtn");
-    const nextUrl = params.get("next");
+    el.value = value;
+    if (el.tagName !== "SELECT") el.readOnly = true;
+  }
 
-    if (!nextBtn) return;
-
-    if (!nextUrl) {
-      nextBtn.disabled = true;
-      nextBtn.title = "No next student link found.";
-      return;
-    }
-
-    nextBtn.addEventListener("click", () => {
-      window.location.href = nextUrl;
-    });
-  });
-</script>
-  
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
-
-    // Existing autofill logic (keep yours if you already have it)
-    for (const [key, value] of params.entries()) {
-      const el = document.getElementById(key);
-      if (!el) continue;
-      el.value = value;
-      if (el.tagName !== "SELECT") el.readOnly = true;
-    }
-
-    // Next student button logic
-    const nextBtn = document.getElementById("nextStudentBtn");
+  // Next student
+  const nextBtn = document.getElementById("nextStudentBtn");
   if (!nextBtn) return;
 
-  const nextId = params.get("nextId"); // coming from your Apps Script redirect
+  const nextId = params.get("nextId");
   if (!nextId) {
     nextBtn.disabled = true;
     nextBtn.title = "No next student available.";
     return;
   }
 
-  const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwKj08y4y3ffRkLtexDRNs1zR8BWpuo7GF4VT71fqbV57fzS1inSFb_Usgb9gWWA2UP/exec";
+  const WEBAPP_URL =
+    "https://script.google.com/macros/s/AKfycbwKj08y4y3ffRkLtexDRNs1zR8BWpuo7GF4VT71fqbV57fzS1inSFb_Usgb9gWWA2UP/exec";
 
   nextBtn.addEventListener("click", () => {
     window.location.href = `${WEBAPP_URL}?id=${encodeURIComponent(nextId)}`;
   });
 });
 </script>
+
   
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT-Rw-L09GeXeKBPvM8qjP9k5qbjQZAwTYmIkeDmXWUcBiI1wTblRURW6yE2kkRZMF6A/exec";
@@ -337,4 +311,5 @@
 
 </body>
 </html>
+
 
