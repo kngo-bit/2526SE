@@ -242,35 +242,23 @@
   </form>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const nextId = params.get("nextId");
 
-    // Prefill
-    for (const [key, value] of params.entries()) {
-      if (key === "nextId") continue;
-      const el = document.getElementById(key);
-      if (!el) continue;
-      el.value = value;
-      if (el.tagName !== "SELECT") el.readOnly = true;
-    }
+  const nextBtn = document.getElementById("nextStudentBtn");
+  if (!nextId) {
+    nextBtn.disabled = true;
+    nextBtn.title = "No next student available.";
+    return;
+  }
 
-    // Next student
-    const nextBtn = document.getElementById("nextStudentBtn");
-    if (!nextBtn) return;
-
-    const nextId = params.get("nextId");
-    if (!nextId) {
-      nextBtn.disabled = true;
-      nextBtn.title = "No next student.";
-      return;
-    }
-
-    const REDIRECT_BASE = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?id=";
-
-    nextBtn.addEventListener("click", () => {
-      window.location.href = REDIRECT_BASE + nextId;
-    });
+  nextBtn.addEventListener("click", () => {
+    const nextUrl =
+      "https://script.google.com/macros/s/AKfycbwKj08y4y3ffRkLtexDRNs1zR8BWpuo7GF4VT71fqbV57fzS1inSFb_Usgb9gWWA2UP/exec?id=" + nextId;
+    window.location.href = nextUrl;
   });
+});
 </script>
 
 <script>
@@ -307,5 +295,3 @@
 
 </body>
 </html>
-
-
