@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Prefill and lock fields
   for (const [key, value] of params.entries()) {
-    if (key === "nextId") continue; // skip helper param
+    if (key === "nextId") continue; // helper param
     if (key === "next") continue;   // ignore old system if present
     const el = document.getElementById(key);
     if (!el) continue;
@@ -268,10 +268,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const WEBAPP_URL =
-    "https://script.google.com/macros/s/AKfycbwKj08y4y3ffRkLtexDRNs1zR8BWpuo7GF4VT71fqbV57fzS1inSFb_Usgb9gWWA2UP/exec?id=123";
+    "https://script.google.com/macros/s/AKfycbwKj08y4y3ffRkLtexDRNs1zR8BWpuo7GF4VT71fqbV57fzS1inSFb_Usgb9gWWA2UP/exec";
 
   nextBtn.addEventListener("click", () => {
-    window.location.href = `${WEBAPP_URL}?id=${encodeURIComponent(nextId)}`;
+    const url = `${WEBAPP_URL}?id=${encodeURIComponent(nextId)}`;
+    window.open(url, "_blank", "noopener"); // avoids "refused to connect" from Sheets context
   });
 });
 </script>
@@ -310,6 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
 
 
 
