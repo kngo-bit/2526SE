@@ -286,20 +286,23 @@
 
     // Next student button logic
     const nextBtn = document.getElementById("nextStudentBtn");
-    if (!nextBtn) return;
+  if (!nextBtn) return;
 
-    const nextUrl = params.get("next");
-    if (!nextUrl) {
-      nextBtn.disabled = true;
-      nextBtn.title = "No next student link found.";
-      return;
-    }
+  const nextId = params.get("nextId"); // coming from your Apps Script redirect
+  if (!nextId) {
+    nextBtn.disabled = true;
+    nextBtn.title = "No next student available.";
+    return;
+  }
 
-    nextBtn.addEventListener("click", () => {
-      window.location.href = nextUrl;
-    });
+  const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwKj08y4y3ffRkLtexDRNs1zR8BWpuo7GF4VT71fqbV57fzS1inSFb_Usgb9gWWA2UP/exec";
+
+  nextBtn.addEventListener("click", () => {
+    window.location.href = `${WEBAPP_URL}?id=${encodeURIComponent(nextId)}`;
   });
+});
 </script>
+  
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT-Rw-L09GeXeKBPvM8qjP9k5qbjQZAwTYmIkeDmXWUcBiI1wTblRURW6yE2kkRZMF6A/exec";
 
@@ -334,3 +337,4 @@
 
 </body>
 </html>
+
